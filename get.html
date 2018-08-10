@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>AJAX</h2>
+
+<input type="text" id="word"></input>
+<button type="button" onclick="loadDoc()">Request data</button>
+
+<p id="demo"></p>
+
+
+<script>
+function loadDoc(word) {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (xhttp.readyState == 4 && xhttp.status == 200) {
+      var o = JSON.parse(xhttp.responseText) ; 
+      alert(o[0]['text']+"\n\n"+o[1]['text']) ; 
+    }
+  };
+  word = document.getElementById("word").value ; 
+  xhttp.open("GET", "http://api.wordnik.com/v4/word.json/"+word+"/definitions?limit=200&includeRelated=true&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5", true);
+  xhttp.send();
+}
+
+function getSelectionText() {
+    var text = "";
+    if (window.getSelection) {
+        text = window.getSelection().toString();
+    } else if (document.selection && document.selection.type != "Control") {
+        text = document.selection.createRange().text;
+    }
+    
+    return text;
+}
+function displayunicode(e){
+    var unicode=e.keyCode? e.keyCode : e.charCode
+    alert(unicode)
+}
+</script>
+
+</body>
+</html>
